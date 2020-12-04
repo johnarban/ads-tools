@@ -16,6 +16,19 @@ Requirements:
 call with `python ads_lib_pull.py`
 or `chmod +x` the file, to make it executable without `python` at the beginning. 
 
+Use case:
+
+```bash
+> cd ~/Overleaf/MySharedBibTexFile
+> ads_lib_pull.py -l [library_id] -t [TOKEN]
+> ls
+ bibcodes
+ libraries.bib
+```
+After making changes to the library, run the command again to get update the .bib file. Or, you can
+add merge a 2nd library. Duplicate entries won't be added.
+
+______________________________
 ```
 
 usage: ads_lib_pull.py [-h] [-l LIBRARY_ID] [-t TOKEN] [-r] [--list] [-b BIBCODES] [-f BIBFILE]
