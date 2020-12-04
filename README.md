@@ -4,6 +4,10 @@ tools<sup>*</sup> for working with ADS
 <sup>*</sup> _tool**s**_ in the classic _singular_ sense of the plural
 
 
+## add_bibcode.py
+adds a bibtex corresponding to a bibcode to a bibtex file
+`add_bibcode.py bibcode1 bibcode2 -f bibtex.file`
+Works with `ads_lib_pull.py` so defaults are to add to library.bib and bibcodes
 
 
 ## ads_lib_pull.py
