@@ -133,6 +133,9 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--refresh', action='store_true',
                         help="create a new bibtex file and bibcode list even if one exists. This will overwrite any changes you've made")
     
+    parser.add_argument('--list','--list-libaries',action='store_true',
+                        help='List your library names and IDs')
+    
     parser.add_argument('-b','--bibcodes',
                         help='name of file to store bibcodes',
                         default='bibcodes',
@@ -142,13 +145,14 @@ if __name__ == '__main__':
                         help='name of bibtex (.bib) file',
                         default='library.bib',
                         dest='bibfile')
+    
     parser.add_argument('--bib-format',choices=['bibtex','bibtexabs'],
                        help="""[[DISABLED]] Format for bibtex file. 
                        bibtexabs only works if using the git version of the abs module""",
-                       default='bibtexabs')
+                       default='bibtex')
     
-    parser.add_argument('--list','--list-libaries',action='store_true',
-                        help='List your library names and IDs')
+    parser.add_argument('--api-rows', help="number of rows retreived with each api call to download the library",
+                        default=25,dest='rows')
 
     args = parser.parse_args()
 
@@ -167,6 +171,7 @@ if __name__ == '__main__':
     bibfile = args.bibfile
     token = args.token
     refresh = args.refresh
+    rows = args.rows
     
 
     if args.list:
@@ -202,7 +207,7 @@ if __name__ == '__main__':
             print('Creating new bib file for ADS Library "{}", id: {}'.format(
                 metadata['name'], metadata['id']))
             
-            library = get_library(library_id=metadata['id'], num_documents=metadata['num_documents'])
+            library = get_library(library_id=metadata['id'], num_documents=metadata['num_documents'],rows=rows)
             print('New bib file has {} items'.format(len(library)))
             
             bibtex = ads.ExportQuery(library, format='bibtexabs').execute()
@@ -231,7 +236,7 @@ if __name__ == '__main__':
             print('Contains {} items'.format(len(current)))
  
             library = get_library(
-                library_id=metadata['id'], num_documents=metadata['num_documents'])
+                library_id=metadata['id'], num_documents=metadata['num_documents'], rows=rows)
     
             # get the exclusive join of the sets
             new = list(set(current) ^ set(library))
