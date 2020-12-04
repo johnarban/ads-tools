@@ -151,28 +151,42 @@ if __name__ == '__main__':
                        bibtexabs only works if using the git version of the abs module""",
                        default='bibtex')
     
-    parser.add_argument('--api-rows', help="number of rows retreived with each api call to download the library",
-                        default=25,dest='rows')
+    parser.add_argument('--api-rows', type=int, help="number of rows retreived with each api call to download the library",
+                        default=25)
+    
+    parser.add_argument('--debug',action='store_true')
 
     args = parser.parse_args()
 
     library_id = args.library_id
+    bibcodefile = args.bibcodes
+    bibfile = args.bibfile
     
     #get the saved library ID
     #if one isn't passed
-    if library_id is None:
-        if os.path.isfile('library.id'):
+    if os.path.isfile('library.id'):
             with open('library.id','r') as f:
-                library_id = f.read()
-        
+                lib_config = f.read()
+            if library_id is None:
+                library_id = lib_config
+#             if bibcodefile is None:
+#                 bibcodefile = lib_config[1]
+#             if bibfile is None:
+#                 bibfile = lib_config[2]
+               
 
 
-    bibcodefile = args.bibcodes
-    bibfile = args.bibfile
+    
     token = args.token
     refresh = args.refresh
-    rows = args.rows
+    rows = args.api_rows
     
+    if args.debug:
+        print(bibcodefile)
+        print(bibfile)
+        print(token)
+        print(refresh)
+        print(rows)
 
     if args.list:
         libraries = get_libraries()
@@ -210,10 +224,12 @@ if __name__ == '__main__':
             library = get_library(library_id=metadata['id'], num_documents=metadata['num_documents'],rows=rows)
             print('New bib file has {} items'.format(len(library)))
             
-            bibtex = ads.ExportQuery(library, format='bibtexabs').execute()
+            bibtex = ads.ExportQuery(library, format=args.bib_format).execute()
 
             with open('library.id','w') as f:
                 f.write(library_id)
+#                 f.write(bibcodefile)
+#                 f.write(bibfile)
                 
             with open(bibcodefile, 'w') as f:
                 f.writelines('{}\n'.format(bc) for bc in library)
@@ -242,7 +258,7 @@ if __name__ == '__main__':
             new = list(set(current) ^ set(library))
             if len(new) > 0:
                 print('Adding {} new items'.format(len(new)))
-                bibtex=ads.ExportQuery(new, format='bibtexabs').execute()
+                bibtex=ads.ExportQuery(new, format=args.bib_format).execute()
                 
                 with open(bibcodefile, 'a') as f:
                     f.writelines('{}\n'.format(bc) for bc in new)
