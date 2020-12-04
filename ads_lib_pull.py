@@ -130,6 +130,9 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--token',default=None,
                         help='ADS developer token otherwise defaults to ~/.ads/dev_key',)
     
+    parser.add_argument('-r', '--refresh', action='store_true',
+                        help="create a new bibtex file and bibcode list even if one exists. This will overwrite any changes you've made")
+    
     parser.add_argument('-b','--bibcodes',
                         help='name of file to store bibcodes',
                         default='bibcodes',
@@ -163,6 +166,7 @@ if __name__ == '__main__':
     bibcodefile = args.bibcodes
     bibfile = args.bibfile
     token = args.token
+    refresh = args.refresh
     
 
     if args.list:
@@ -194,7 +198,7 @@ if __name__ == '__main__':
         # if we are running for the first time
         # then there is no file of bibcodes to compare to
         # so we will just download the whole library
-        if not os.path.isfile(bibcodefile):
+        if (not os.path.isfile(bibcodefile)) or refresh:
             print('Creating new bib file for ADS Library "{}", id: {}'.format(
                 metadata['name'], metadata['id']))
             
