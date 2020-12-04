@@ -40,9 +40,9 @@ optional arguments:
 
 Recommended alterations:
  - I increase the number of row retreived with each API call to 500. This is done by setting `--api-rows` in the call
-  - ~This *should* be made an option that is settable from the command line. *Shoulda, woulda, coulda*.~
+   - ~This *should* be made an option that is settable from the command line. *Shoulda, woulda, coulda*.~
  - Future versions should save config options to the `library.id` file
-  - like the bibcode file, bibtex file, number of rows, etc. that way you can customize the results w/o modifying the script
+   - like the bibcode file, bibtex file, number of rows, etc. that way you can customize the results w/o modifying the script
 
 
 Credit: Thank you to [@adsabs](https://twitter.com/adsabs/status/1334569272778035207) for the tweet which led me down this road
