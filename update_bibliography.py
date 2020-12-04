@@ -63,7 +63,7 @@ def get_libraries():
         raise ValueError(r.text)
 
 
-def get_library(library_id, num_documents, start=0):
+def get_library(library_id, num_documents, start=0, rows=25):
     """
     Get the content of a library when you know its id. As we paginate the
     requests from the private library end point for document retrieval,
@@ -73,7 +73,9 @@ def get_library(library_id, num_documents, start=0):
     :param num_documents: number of documents in the library
     :type num_documents: int
     :param start: start with a given row
-    :type start
+    :type start: int
+    :param rows: number of rows to request
+    :type rows: int
     :return: list
     @andycasey
     CHANGES: @astrojthe3 - Dec 4 2020
@@ -85,7 +87,7 @@ def get_library(library_id, num_documents, start=0):
 
     # start = 0
     num_documents -= start
-    rows = 25
+    #rows = 25
     num_paginates = int(math.ceil(num_documents / (1.0 * rows)))
 
     documents = []
@@ -138,7 +140,8 @@ if __name__ == '__main__':
                         default='library.bib',
                         dest='bibfile')
     parser.add_argument('--bib-format',choices=['bibtex','bibtexabs'],
-                       help='[[DISABLED]] Format for bibtex file. bibtexabs only works if using the git version of the abs module',
+                       help="""[[DISABLED]] Format for bibtex file. 
+                       bibtexabs only works if using the git version of the abs module""",
                        default='bibtexabs')
     
     parser.add_argument('--list','--list-libaries',action='store_true',
@@ -152,7 +155,7 @@ if __name__ == '__main__':
     #if one isn't passed
     if library_id is None:
         if os.path.isfile('library.id'):
-            with open('library.id','r'):
+            with open('library.id','r') as f:
                 library_id = f.read()
         
 
