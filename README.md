@@ -1,11 +1,21 @@
 # ads-tools
 tools<sup>*</sup> for working with ADS
 
-<sup>*</sup> tools in the singular sense
+<sup>*</sup> _tool**s**_ in the classic _singular_ sense of the plural
 
-call with `python update_bibliography.py`
 
+
+
+## ads_lib_pull.py
+You **need** and ADS API token for this to work. You can get one with an ADS account [here](https://ui.adsabs.harvard.edu/user/settings/token)
+
+Requirements:
+ - ads from Andy Casey: https://github.com/andycasey/ads `pip install ads`
+ - requests: fairly standard package.https://requests.readthedocs.io/en/master/user/install/  `pip install requests`
+ 
+call with `python ads_lib_pull.py`
 or `chmod +x` the file, to make it executable without `python` at the beginning. 
+
 ```
 
 usage: ads_lib_pull.py [-h] [-l LIBRARY_ID] [-t TOKEN] [-r] [--list] [-b BIBCODES] [-f BIBFILE]
@@ -34,7 +44,6 @@ optional arguments:
                         module
   --api-rows API_ROWS   number of rows retreived with each api call to download the library
   --debug
-
 
 ```
 
