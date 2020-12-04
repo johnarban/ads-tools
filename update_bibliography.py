@@ -19,6 +19,7 @@ def get_config(token=None):
     """
     Load ADS developer key from file
     :return: str
+    @andycasey
     """
     # global token
     if token is None:
