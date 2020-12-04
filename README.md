@@ -7,7 +7,7 @@ tools<sup>*</sup> for working with ADS
 
 
 ## ads_lib_pull.py
-You **need** and ADS API token for this to work. You can get one with an ADS account [here](https://ui.adsabs.harvard.edu/user/settings/token)
+You **need** an ADS API token for this to work. You can get one with an ADS account [here](https://ui.adsabs.harvard.edu/user/settings/token)
 
 Requirements:
  - ads from Andy Casey: https://github.com/andycasey/ads `pip install ads`
